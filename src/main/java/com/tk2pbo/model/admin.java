@@ -2,9 +2,13 @@ package com.tk2pbo.model;
 
 import com.tk2pbo.util.PasswordUtil;
 
-public class admin extends Pengguna {
+public class Admin extends Pengguna {
 
-    public admin(int id, String nama, String email, String noTelepon) {
+    private String username;
+    private String passwordHash;
+
+    public Admin(int id, String nama, String email, String noTelepon,
+        String username, String passwordHash) {
         super(id, nama, email, noTelepon);
         this.username = username;
         this.passwordHash = passwordHash;

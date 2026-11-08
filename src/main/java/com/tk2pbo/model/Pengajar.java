@@ -46,7 +46,7 @@ public class Pengajar extends Pengguna{
         this.pengalamanMengajar = pengalamanMengajar;
     }
 
-    public double hitungHonor() {
+    public double hitungHonor(double jam) {
         return tarifPerJam * jam;
     }
 
@@ -54,5 +54,15 @@ public class Pengajar extends Pengguna{
     public String tampilkanInfo() {
         return "Pengajar: " + nama + " | " + (spesialisasi == null ? "-" : spesialisasi)
         + " | " + FormatUtil.rupiah(tarifPerJam) + "/jam | " + pengalamanMengajar + " tahun";
+    }
+
+    @Override 
+    public String getPeran() {
+        return "Pengajar";
+    }
+
+    @Override 
+    public String toString() {
+        return spesialisasi == null ? nama : nama + " (" + spesialisasi + ")";
     }
 }
