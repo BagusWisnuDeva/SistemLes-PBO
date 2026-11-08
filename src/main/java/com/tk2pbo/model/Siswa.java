@@ -14,7 +14,7 @@ public class Siswa extends Pengguna {
     private String username;
 
     public Siswa(int id, String nama, String email, String noTelepon, String alamat,
-        LocalDate tanggalLahir, String username, String passwordHash) {
+        LocalDate tanggalLahir, String kelas, String username, String passwordHash) {
         super(id, nama, email, noTelepon);
         setAlamat(alamat);
         setTanggalLahir(tanggalLahir);
@@ -64,15 +64,15 @@ public class Siswa extends Pengguna {
     }
 
     public double hitungBiayaKursus(List<Pendaftaran> daftar) {
-        return daftar.stream()
-                .filter(p -> p.getSiswa().equals(this))
-                .mapToDouble(p -> p.getKursus().getBiayaPerPertemuan())
-                .sum();
-    }
+    return daftar.stream()
+            .filter(p -> p.getSiswa().getId() == this.id)
+            .mapToDouble(Pendaftaran::getTotalBiaya)
+            .sum();
+}
 
     @Override
     public String tampilkanInfo() {
-        return "Siswa:" + nama + " | Kelas: " + (kelas != null ? "-" : kelas)
+        return "Siswa:" + nama + " | Kelas: " + (kelas == null ? "-" : kelas)
         + " | Tanggal Lahir " + FormatUtil.formatTanggal(tanggalLahir)
         + " | Alamat: " + (alamat != null ? alamat : "-");
     }  
