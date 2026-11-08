@@ -1,0 +1,3 @@
+db.url=jdbc:mysql://localhost:3306/db_kursus?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Makassar
+db.user=root
+db.password=
