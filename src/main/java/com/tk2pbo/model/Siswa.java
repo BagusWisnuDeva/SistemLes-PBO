@@ -66,7 +66,7 @@ public class Siswa extends Pengguna {
     public double hitungBiayaKursus(List<Pendaftaran> daftar) {
         return daftar.stream()
                 .filter(p -> p.getSiswa().equals(this))
-                .mapToDouble(p -> p.getKursus().getBiaya())
+                .mapToDouble(p -> p.getKursus().getBiayaPerPertemuan())
                 .sum();
     }
 
@@ -75,5 +75,10 @@ public class Siswa extends Pengguna {
         return "Siswa:" + nama + " | Kelas: " + (kelas != null ? "-" : kelas)
         + " | Tanggal Lahir " + FormatUtil.formatTanggal(tanggalLahir)
         + " | Alamat: " + (alamat != null ? alamat : "-");
-    }   
+    }  
+
+    @Override
+    public String getPeran() {
+        return "Siswa";
+    }
 }
