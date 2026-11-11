@@ -1,0 +1,142 @@
+package com.tk2pbo.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+import kursus.exception.JadwalBentrokException;
+import kursus.exception.ValidasiException;
+import kursus.model.Jadwal;
+import kursus.util.DatabaseConnection;
+
+/** DAO tabel jadwal, termasuk validasi bentrok sebelum menyimpan. */
+public class JadwalDao implements CrudDao<Jadwal> {
+
+    private static final String SELECT_DASAR =
+            "SELECT j.id_jadwal, j.hari, j.jam_mulai, j.jam_selesai, j.ruangan, " + PendaftaranDao.KOLOM
+            + " FROM jadwal j JOIN pendaftaran p ON j.id_pendaftaran = p.id_pendaftaran "
+            + PendaftaranDao.JOIN + " ";
+
+    private static Jadwal map(ResultSet rs) throws SQLException {
+        return new Jadwal(rs.getInt("id_jadwal"), PendaftaranDao.map(rs), rs.getString("hari"),
+                rs.getTime("jam_mulai").toLocalTime(), rs.getTime("jam_selesai").toLocalTime(),
+                rs.getString("ruangan"));
+    }
+
+    private List<Jadwal> ambil(String kondisi, Pengisi pengisi) throws SQLException {
+        List<Jadwal> hasil = new ArrayList<>();
+        try (Connection c = DatabaseConnection.getConnection();
+             PreparedStatement ps = c.prepareStatement(SELECT_DASAR + kondisi)) {
+            pengisi.isi(ps);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    hasil.add(map(rs));
+                }
+            }
+        }
+        return hasil;
+    }
+
+    @Override
+    public List<Jadwal> semua() throws SQLException {
+        return ambil("ORDER BY FIELD(j.hari,'Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'), j.jam_mulai",
+                ps -> { });
+    }
+
+    @Override
+    public Jadwal cariById(int id) throws SQLException {
+        List<Jadwal> hasil = ambil("WHERE j.id_jadwal = ?", ps -> ps.setInt(1, id));
+        return hasil.isEmpty() ? null : hasil.get(0);
+    }
+
+    /** Jadwal seorang siswa (dashboard siswa). */
+    public List<Jadwal> bySiswa(int idSiswa) throws SQLException {
+        return ambil("WHERE p.id_siswa = ? ORDER BY FIELD(j.hari,'Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'), j.jam_mulai",
+                ps -> ps.setInt(1, idSiswa));
+    }
+
+    /** Jadwal mengajar seorang pengajar (laporan jadwal pengajar). */
+    public List<Jadwal> byPengajar(int idPengajar) throws SQLException {
+        return ambil("WHERE p.id_pengajar = ? ORDER BY FIELD(j.hari,'Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'), j.jam_mulai",
+                ps -> ps.setInt(1, idPengajar));
+    }
+
+    /** Jumlah jadwal yang dimiliki sebuah pendaftaran. */
+    public int hitungByPendaftaran(int idPendaftaran) throws SQLException {
+        try (Connection c = DatabaseConnection.getConnection();
+             PreparedStatement ps = c.prepareStatement("SELECT COUNT(*) FROM jadwal WHERE id_pendaftaran = ?")) {
+            ps.setInt(1, idPendaftaran);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? rs.getInt(1) : 0;
+            }
+        }
+    }
+
+    /**
+     * Memeriksa apakah jadwal baru bentrok dengan jadwal yang sudah tersimpan pada hari yang sama.
+     * Memakai stream: setiap jadwal lama diperiksa lewat Jadwal.alasanBentrok().
+     */
+    public void validasiTidakBentrok(Jadwal baru) throws SQLException, JadwalBentrokException {
+        List<Jadwal> padaHariSama = ambil("WHERE j.hari = ?", ps -> ps.setString(1, baru.getHari()));
+        Optional<String> alasan = padaHariSama.stream()
+                .map(baru::alasanBentrok)
+                .filter(Objects::nonNull)
+                .findFirst();
+        if (alasan.isPresent()) {
+            throw new JadwalBentrokException("Jadwal bentrok: " + alasan.get() + ".");
+        }
+    }
+
+    @Override
+    public void tambah(Jadwal j) throws SQLException, ValidasiException {
+        validasiTidakBentrok(j);
+        String sql = "INSERT INTO jadwal (id_pendaftaran, hari, jam_mulai, jam_selesai, ruangan) VALUES (?, ?, ?, ?, ?)";
+        try (Connection c = DatabaseConnection.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setInt(1, j.getPendaftaran().getIdPendaftaran());
+            ps.setString(2, j.getHari());
+            ps.setTime(3, Time.valueOf(j.getJamMulai()));
+            ps.setTime(4, Time.valueOf(j.getJamSelesai()));
+            ps.setString(5, j.getRuangan());
+            ps.executeUpdate();
+            try (ResultSet kunci = ps.getGeneratedKeys()) {
+                if (kunci.next()) {
+                    j.setIdJadwal(kunci.getInt(1));
+                }
+            }
+        }
+    }
+
+    @Override
+    public void ubah(Jadwal j) throws SQLException, ValidasiException {
+        validasiTidakBentrok(j);
+        String sql = "UPDATE jadwal SET id_pendaftaran = ?, hari = ?, jam_mulai = ?, jam_selesai = ?, ruangan = ? "
+                + "WHERE id_jadwal = ?";
+        try (Connection c = DatabaseConnection.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, j.getPendaftaran().getIdPendaftaran());
+            ps.setString(2, j.getHari());
+            ps.setTime(3, Time.valueOf(j.getJamMulai()));
+            ps.setTime(4, Time.valueOf(j.getJamSelesai()));
+            ps.setString(5, j.getRuangan());
+            ps.setInt(6, j.getIdJadwal());
+            ps.executeUpdate();
+        }
+    }
+
+    @Override
+    public void hapus(int id) throws SQLException {
+        try (Connection c = DatabaseConnection.getConnection();
+             PreparedStatement ps = c.prepareStatement("DELETE FROM jadwal WHERE id_jadwal = ?")) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        }
+    }
+}

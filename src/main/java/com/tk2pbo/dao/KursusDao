@@ -1,0 +1,101 @@
+package com.tk2pbo.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import kursus.exception.ValidasiException;
+import kursus.model.Kursus;
+import kursus.util.DatabaseConnection;
+
+/** DAO tabel kursus. */
+public class KursusDao implements CrudDao<Kursus> {
+
+    static final String KOLOM = "id_kursus, nama_kursus, deskripsi, biaya_per_pertemuan, durasi_menit";
+
+    static Kursus map(ResultSet rs) throws SQLException {
+        return new Kursus(rs.getInt("id_kursus"), rs.getString("nama_kursus"), rs.getString("deskripsi"),
+                rs.getDouble("biaya_per_pertemuan"), rs.getInt("durasi_menit"));
+    }
+
+    @Override
+    public void tambah(Kursus k) throws SQLException {
+        String sql = "INSERT INTO kursus (nama_kursus, deskripsi, biaya_per_pertemuan, durasi_menit) VALUES (?, ?, ?, ?)";
+        try (Connection c = DatabaseConnection.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            isiParameter(ps, k);
+            ps.executeUpdate();
+            try (ResultSet kunci = ps.getGeneratedKeys()) {
+                if (kunci.next()) {
+                    k.setIdKursus(kunci.getInt(1));
+                }
+            }
+        }
+    }
+
+    @Override
+    public List<Kursus> semua() throws SQLException {
+        List<Kursus> hasil = new ArrayList<>();
+        try (Connection c = DatabaseConnection.getConnection();
+             PreparedStatement ps = c.prepareStatement("SELECT " + KOLOM + " FROM kursus ORDER BY nama_kursus");
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                hasil.add(map(rs));
+            }
+        }
+        return hasil;
+    }
+
+    @Override
+    public Kursus cariById(int id) throws SQLException {
+        try (Connection c = DatabaseConnection.getConnection();
+             PreparedStatement ps = c.prepareStatement("SELECT " + KOLOM + " FROM kursus WHERE id_kursus = ?")) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? map(rs) : null;
+            }
+        }
+    }
+
+    @Override
+    public void ubah(Kursus k) throws SQLException {
+        String sql = "UPDATE kursus SET nama_kursus = ?, deskripsi = ?, biaya_per_pertemuan = ?, durasi_menit = ? "
+                + "WHERE id_kursus = ?";
+        try (Connection c = DatabaseConnection.getConnection();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            isiParameter(ps, k);
+            ps.setInt(5, k.getIdKursus());
+            ps.executeUpdate();
+        }
+    }
+
+    @Override
+    public void hapus(int id) throws SQLException, ValidasiException {
+        try (Connection c = DatabaseConnection.getConnection()) {
+            try (PreparedStatement cek = c.prepareStatement("SELECT COUNT(*) FROM pendaftaran WHERE id_kursus = ?")) {
+                cek.setInt(1, id);
+                try (ResultSet rs = cek.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) > 0) {
+                        throw new ValidasiException("Kursus tidak dapat dihapus karena sudah diikuti pada "
+                                + rs.getInt(1) + " pendaftaran.");
+                    }
+                }
+            }
+            try (PreparedStatement ps = c.prepareStatement("DELETE FROM kursus WHERE id_kursus = ?")) {
+                ps.setInt(1, id);
+                ps.executeUpdate();
+            }
+        }
+    }
+
+    private void isiParameter(PreparedStatement ps, Kursus k) throws SQLException {
+        ps.setString(1, k.getNamaKursus());
+        SiswaDao.setNullableString(ps, 2, k.getDeskripsi());
+        ps.setDouble(3, k.getBiayaPerPertemuan());
+        ps.setInt(4, k.getDurasiMenit());
+    }
+}
