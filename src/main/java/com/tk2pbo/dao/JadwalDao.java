@@ -11,12 +11,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import kursus.exception.JadwalBentrokException;
-import kursus.exception.ValidasiException;
-import kursus.model.Jadwal;
-import kursus.util.DatabaseConnection;
+import com.tk2pbo.exception.JadwalBentrokException;
+import com.tk2pbo.exception.ValidasiException;
+import com.tk2pbo.model.Jadwal;
+import com.tk2pbo.util.DatabaseConnection;
 
-/** DAO tabel jadwal, termasuk validasi bentrok sebelum menyimpan. */
 public class JadwalDao implements CrudDao<Jadwal> {
 
     private static final String SELECT_DASAR =
@@ -79,10 +78,6 @@ public class JadwalDao implements CrudDao<Jadwal> {
         }
     }
 
-    /**
-     * Memeriksa apakah jadwal baru bentrok dengan jadwal yang sudah tersimpan pada hari yang sama.
-     * Memakai stream: setiap jadwal lama diperiksa lewat Jadwal.alasanBentrok().
-     */
     public void validasiTidakBentrok(Jadwal baru) throws SQLException, JadwalBentrokException {
         List<Jadwal> padaHariSama = ambil("WHERE j.hari = ?", ps -> ps.setString(1, baru.getHari()));
         Optional<String> alasan = padaHariSama.stream()

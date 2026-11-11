@@ -8,11 +8,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import kursus.exception.ValidasiException;
-import kursus.model.Kursus;
-import kursus.util.DatabaseConnection;
+import com.tk2pbo.exception.ValidasiException;
+import com.tk2pbo.model.Kursus;
+import com.tk2pbo.util.DatabaseConnection;
 
-/** DAO tabel kursus. */
 public class KursusDao implements CrudDao<Kursus> {
 
     static final String KOLOM = "id_kursus, nama_kursus, deskripsi, biaya_per_pertemuan, durasi_menit";
@@ -94,7 +93,7 @@ public class KursusDao implements CrudDao<Kursus> {
 
     private void isiParameter(PreparedStatement ps, Kursus k) throws SQLException {
         ps.setString(1, k.getNamaKursus());
-        SiswaDao.setNullableString(ps, 2, k.getDeskripsi());
+        SiswaDao.setNullableString(ps, 2, k.getDeskripsiKursus());
         ps.setDouble(3, k.getBiayaPerPertemuan());
         ps.setInt(4, k.getDurasiMenit());
     }

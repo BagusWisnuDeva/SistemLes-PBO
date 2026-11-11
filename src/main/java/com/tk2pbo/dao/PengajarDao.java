@@ -8,11 +8,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import kursus.exception.ValidasiException;
-import kursus.model.Pengajar;
-import kursus.util.DatabaseConnection;
+import com.tk2pbo.exception.ValidasiException;
+import com.tk2pbo.model.Pengajar;
+import com.tk2pbo.util.DatabaseConnection;
 
-/** DAO tabel pengajar. */
 public class PengajarDao implements CrudDao<Pengajar> {
 
     static final String KOLOM = "id_pengajar, nama, email, no_telepon, spesialisasi, tarif_per_jam, pengalaman";
@@ -100,6 +99,6 @@ public class PengajarDao implements CrudDao<Pengajar> {
         SiswaDao.setNullableString(ps, 3, p.getNoTelepon());
         SiswaDao.setNullableString(ps, 4, p.getSpesialisasi());
         ps.setDouble(5, p.getTarifPerJam());
-        ps.setInt(6, p.getPengalaman());
+        ps.setInt(6, p.getPengalamanMengajar());
     }
 }
