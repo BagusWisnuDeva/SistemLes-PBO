@@ -21,7 +21,7 @@ public final class DatabaseConnection {
             user = p.getProperty("db.user", user);
             password = p.getProperty("db.password", password);
         } catch (IOException e) {
-            // file tidak ada: pakai nilai bawaan XAMPP
+            
         }
     }
 
