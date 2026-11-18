@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.tk2pbo.controller.BerandaController" spacing="14" styleClass="halaman">
+    <padding>
+        <Insets top="22" right="22" bottom="22" left="22"/>
+    </padding>
+    <Label text="Beranda" styleClass="judul-halaman"/>
+    <Label text="Ringkasan data lembaga kursus / les privat" styleClass="keterangan"/>
+    <FlowPane hgap="14" vgap="14">
+        <VBox styleClass="kartu" prefWidth="190" spacing="2">
+            <Label fx:id="lblSiswa" text="0" styleClass="kartu-angka"/>
+            <Label text="Siswa terdaftar" styleClass="kartu-label"/>
+        </VBox>
+        <VBox styleClass="kartu" prefWidth="190" spacing="2">
+            <Label fx:id="lblPengajar" text="0" styleClass="kartu-angka"/>
+            <Label text="Pengajar" styleClass="kartu-label"/>
+        </VBox>
+        <VBox styleClass="kartu" prefWidth="190" spacing="2">
+            <Label fx:id="lblKursus" text="0" styleClass="kartu-angka"/>
+            <Label text="Kursus tersedia" styleClass="kartu-label"/>
+        </VBox>
+        <VBox styleClass="kartu" prefWidth="190" spacing="2">
+            <Label fx:id="lblPendaftaran" text="0" styleClass="kartu-angka"/>
+            <Label text="Total pendaftaran" styleClass="kartu-label"/>
+        </VBox>
+        <VBox styleClass="kartu" prefWidth="250" spacing="2">
+            <Label fx:id="lblPendapatan" text="Rp 0" styleClass="kartu-angka"/>
+            <Label text="Pendapatan (pendaftaran lunas)" styleClass="kartu-label"/>
+        </VBox>
+        <VBox styleClass="kartu" prefWidth="250" spacing="2">
+            <Label fx:id="lblTunggakan" text="Rp 0" styleClass="kartu-angka"/>
+            <Label text="Tagihan belum dibayar" styleClass="kartu-label"/>
+        </VBox>
+    </FlowPane>
+    <Label text="Pendaftaran yang belum dibayar" styleClass="judul-kecil">
+        <VBox.margin>
+            <Insets top="8"/>
+        </VBox.margin>
+    </Label>
+    <TableView fx:id="tabelBelumBayar" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+            <TableColumn fx:id="colSiswa" text="Siswa" prefWidth="220"/>
+            <TableColumn fx:id="colKursus" text="Kursus" prefWidth="200"/>
+            <TableColumn fx:id="colTanggal" text="Tgl Daftar" prefWidth="110"/>
+            <TableColumn fx:id="colTotal" text="Tagihan" prefWidth="140"/>
+        </columns>
+    </TableView>
+</VBox>

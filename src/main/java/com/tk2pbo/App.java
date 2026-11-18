@@ -1,34 +1,17 @@
 package com.tk2pbo;
 
+import com.tk2pbo.util.Navigator;
+
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class App extends Application {
 
-    
-@Override
-public void start(Stage stage) throws Exception {
-
-    System.out.println(
-        getClass().getResource("/com/tk2pbo/fxml/login.fxml")
-    );
-
-    FXMLLoader loader = new FXMLLoader(
-        getClass().getResource("/com/tk2pbo/fxml/login.fxml")
-    );
-
-    Parent root = loader.load();
-
-    Scene scene = new Scene(root);
-
-    stage.setTitle("Sistem Les");
-    stage.setScene(scene);
-    stage.show();
-}
-
+    @Override
+    public void start(Stage stage) {
+        Navigator.init(stage);
+        Navigator.tampilLogin();
+    }
 
     public static void main(String[] args) {
         launch(args);

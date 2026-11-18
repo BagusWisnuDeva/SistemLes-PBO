@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.tk2pbo.controller.PendaftaranController" styleClass="halaman">
+    <padding>
+        <Insets top="22" right="22" bottom="22" left="22"/>
+    </padding>
+    <top>
+        <VBox spacing="8">
+            <Label text="Pendaftaran Kursus" styleClass="judul-halaman"/>
+            <Label text="Satu siswa dapat mengikuti banyak kursus, dan satu kursus dapat diikuti banyak siswa (Many-to-Many)."
+                   styleClass="keterangan" wrapText="true"/>
+            <TextField fx:id="tfCari" promptText="Cari berdasarkan siswa, kursus, pengajar, atau status..."/>
+            <BorderPane.margin>
+                <Insets bottom="12"/>
+            </BorderPane.margin>
+        </VBox>
+    </top>
+    <center>
+        <TableView fx:id="tabel">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="40"/>
+                <TableColumn fx:id="colSiswa" text="Siswa" prefWidth="140"/>
+                <TableColumn fx:id="colKursus" text="Kursus" prefWidth="125"/>
+                <TableColumn fx:id="colPengajar" text="Pengajar" prefWidth="125"/>
+                <TableColumn fx:id="colTanggal" text="Tgl Daftar" prefWidth="92"/>
+                <TableColumn fx:id="colPertemuan" text="Pertemuan" prefWidth="88"/>
+                <TableColumn fx:id="colTotal" text="Total Biaya" prefWidth="100"/>
+                <TableColumn fx:id="colStatus" text="Status" prefWidth="100"/>
+            </columns>
+        </TableView>
+    </center>
+    <right>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefWidth="290" styleClass="form-scroll">
+            <BorderPane.margin>
+                <Insets left="16"/>
+            </BorderPane.margin>
+            <VBox spacing="6" styleClass="form-panel">
+                <padding>
+                    <Insets top="16" right="16" bottom="16" left="16"/>
+                </padding>
+                <Label text="Form Pendaftaran" styleClass="judul-kecil"/>
+                <Label text="Siswa *" styleClass="label-field"/>
+                <ComboBox fx:id="cbSiswa" maxWidth="Infinity" promptText="Pilih siswa"/>
+                <Label text="Kursus *" styleClass="label-field"/>
+                <ComboBox fx:id="cbKursus" maxWidth="Infinity" promptText="Pilih kursus"/>
+                <Label text="Pengajar *" styleClass="label-field"/>
+                <ComboBox fx:id="cbPengajar" maxWidth="Infinity" promptText="Pilih pengajar"/>
+                <Label text="Tanggal daftar *" styleClass="label-field"/>
+                <DatePicker fx:id="dpTanggal" maxWidth="Infinity"/>
+                <Label text="Jumlah pertemuan *" styleClass="label-field"/>
+                <TextField fx:id="tfPertemuan" promptText="Contoh: 8"/>
+                <Label fx:id="lblTotal" text="Total biaya: Rp 0" styleClass="ringkasan" wrapText="true">
+                    <VBox.margin>
+                        <Insets top="6"/>
+                    </VBox.margin>
+                </Label>
+                <HBox spacing="8">
+                    <VBox.margin>
+                        <Insets top="8"/>
+                    </VBox.margin>
+                    <Button text="Daftar" onAction="#tambah" styleClass="tombol-utama"/>
+                    <Button text="Ubah" onAction="#ubah" styleClass="tombol-netral"/>
+                    <Button text="Batalkan" onAction="#batalkan" styleClass="tombol-bahaya"/>
+                </HBox>
+                <Button text="Bersihkan Form" onAction="#bersihkan" maxWidth="Infinity" styleClass="tombol-netral"/>
+                <Label text="Pendaftaran yang sudah lunas tidak dapat diubah atau dibatalkan." styleClass="petunjuk" wrapText="true"/>
+            </VBox>
+        </ScrollPane>
+    </right>
+</BorderPane>

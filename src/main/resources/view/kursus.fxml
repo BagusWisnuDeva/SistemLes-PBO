@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.tk2pbo.controller.KursusController" styleClass="halaman">
+    <padding>
+        <Insets top="22" right="22" bottom="22" left="22"/>
+    </padding>
+    <top>
+        <VBox spacing="8">
+            <Label text="Data Kursus" styleClass="judul-halaman"/>
+            <TextField fx:id="tfCari" promptText="Cari berdasarkan nama kursus..."/>
+            <BorderPane.margin>
+                <Insets bottom="12"/>
+            </BorderPane.margin>
+        </VBox>
+    </top>
+    <center>
+        <TableView fx:id="tabel">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+                <TableColumn fx:id="colNama" text="Nama Kursus" prefWidth="180"/>
+                <TableColumn fx:id="colDeskripsi" text="Deskripsi" prefWidth="300"/>
+                <TableColumn fx:id="colBiaya" text="Biaya/Pertemuan" prefWidth="130"/>
+                <TableColumn fx:id="colDurasi" text="Durasi (menit)" prefWidth="100"/>
+            </columns>
+        </TableView>
+    </center>
+    <right>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefWidth="290" styleClass="form-scroll">
+            <BorderPane.margin>
+                <Insets left="16"/>
+            </BorderPane.margin>
+            <VBox spacing="6" styleClass="form-panel">
+                <padding>
+                    <Insets top="16" right="16" bottom="16" left="16"/>
+                </padding>
+                <Label text="Form Kursus" styleClass="judul-kecil"/>
+                <Label text="Nama kursus *" styleClass="label-field"/>
+                <TextField fx:id="tfNama"/>
+                <Label text="Deskripsi" styleClass="label-field"/>
+                <TextArea fx:id="taDeskripsi" prefRowCount="4" wrapText="true"/>
+                <Label text="Biaya per pertemuan (Rp) *" styleClass="label-field"/>
+                <TextField fx:id="tfBiaya" promptText="Contoh: 100000"/>
+                <Label text="Durasi per pertemuan (menit) *" styleClass="label-field"/>
+                <TextField fx:id="tfDurasi" promptText="Contoh: 90"/>
+                <HBox spacing="8">
+                    <VBox.margin>
+                        <Insets top="8"/>
+                    </VBox.margin>
+                    <Button text="Tambah" onAction="#tambah" styleClass="tombol-utama"/>
+                    <Button text="Ubah" onAction="#ubah" styleClass="tombol-netral"/>
+                    <Button text="Hapus" onAction="#hapus" styleClass="tombol-bahaya"/>
+                </HBox>
+                <Button text="Bersihkan Form" onAction="#bersihkan" maxWidth="Infinity" styleClass="tombol-netral"/>
+            </VBox>
+        </ScrollPane>
+    </right>
+</BorderPane>
