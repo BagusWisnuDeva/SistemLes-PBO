@@ -75,7 +75,7 @@
 
 .tombol-netral {
     -fx-background-color: #e5e7eb;
-    -fx-text-fill: #111827;
+    -fx-text-fill: #436850;
     -fx-background-radius: 8;
     -fx-padding: 9 13 9 13;
     -fx-cursor: hand;
@@ -85,9 +85,8 @@
     -fx-background-color: #d1d5db;
 }
 
-/* ---------- Sidebar admin ---------- */
 .sidebar {
-    -fx-background-color: #111827;
+    -fx-background-color: #12372a;
 }
 
 .sidebar-judul {
@@ -111,22 +110,22 @@
 }
 
 .menu-btn:hover {
-    -fx-background-color: #1f2937;
+    -fx-background-color: #436850;
     -fx-text-fill: white;
 }
 
 .menu-aktif {
-    -fx-background-color: #12372a;
+    -fx-background-color: #436850;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
 
 .menu-aktif:hover {
-    -fx-background-color: #12372a;
+    -fx-background-color: #436850;
 }
 
 .menu-keluar {
-    -fx-background-color: #374151;
+    -fx-background-color: #436850;
     -fx-text-fill: white;
     -fx-background-radius: 8;
     -fx-padding: 9 14 9 14;
@@ -137,9 +136,8 @@
     -fx-background-color: #dc2626;
 }
 
-/* ---------- Halaman isi ---------- */
 .halaman {
-    -fx-background-color: #f3f4f6;
+    -fx-background-color: #fbfada;
 }
 
 .judul-halaman {
@@ -149,7 +147,7 @@
 }
 
 .keterangan {
-    -fx-text-fill: #6b7280;
+    -fx-text-fill: #436850;
 }
 
 .form-panel {
@@ -159,7 +157,7 @@
 }
 
 .label-field {
-    -fx-text-fill: #374151;
+    -fx-text-fill: #436850;
     -fx-font-weight: bold;
     -fx-font-size: 12px;
 }
@@ -201,7 +199,6 @@
     -fx-text-fill: #111827;
 }
 
-/* ---------- Tabel ---------- */
 .table-view {
     -fx-background-radius: 10;
     -fx-border-radius: 10;
@@ -225,7 +222,6 @@
     -fx-fill: #111827;
 }
 
-/* ---------- Tambahan ---------- */
 .judul-kecil {
     -fx-font-size: 14px;
     -fx-font-weight: bold;

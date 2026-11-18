@@ -13,7 +13,11 @@ import javafx.stage.Stage;
 
 public final class Navigator {
 
+    private static final double LEBAR = 1280;
+    private static final double TINGGI = 720;
+
     private static Stage stage;
+    private static Scene scene;
 
     private Navigator() { }
 
@@ -29,34 +33,44 @@ public final class Navigator {
         return FXMLLoader.load(lokasi);
     }
 
-    private static void tampil(String namaFxml, String judul, double lebar, double tinggi) {
+    private static void tampil(String namaFxml, String judul) {
         try {
-            Rectangle2D layar = Screen.getPrimary().getVisualBounds();
-            Scene scene = new Scene(muat(namaFxml), Math.min(lebar, layar.getWidth()), Math.min(tinggi, layar.getHeight()));
-            URL css = Navigator.class.getResource("/css/style.css");
-            if (css != null) {
-                scene.getStylesheets().add(css.toExternalForm());
+            Parent root = muat(namaFxml);
+
+            if (scene == null) {
+                Rectangle2D layar = Screen.getPrimary().getVisualBounds();
+                double lebar = Math.min(LEBAR, layar.getWidth());
+                double tinggi = Math.min(TINGGI, layar.getHeight());
+
+                scene = new Scene(root, lebar, tinggi);
+                URL css = Navigator.class.getResource("/css/style.css");
+                if (css != null) {
+                    scene.getStylesheets().add(css.toExternalForm());
+                }
+                stage.setScene(scene);
+                stage.setMinWidth(lebar);
+                stage.setMinHeight(tinggi);
+                stage.setMaximized(true);
+                stage.show();
+            } else {
+                scene.setRoot(root);
             }
             stage.setTitle(judul);
-            stage.setScene(scene);
-            stage.sizeToScene();
-            stage.centerOnScreen();
-            stage.show();
         } catch (IOException e) {
             Notifikasi.error("Gagal memuat tampilan: " + e.getMessage());
         }
     }
 
     public static void tampilLogin() {
-        tampil("login.fxml", "Sistem Pendaftaran Kursus / Les Privat", 480, 560);
+        tampil("login.fxml", "Sistem Pendaftaran Kursus / Les Privat");
     }
 
     public static void tampilAdmin() {
-        tampil("admin.fxml", "Admin - Sistem Pendaftaran Kursus / Les Privat", 1500, 860);
+        tampil("admin.fxml", "Admin - Sistem Pendaftaran Kursus / Les Privat");
     }
 
     public static void tampilSiswa() {
-        tampil("siswa-dashboard.fxml", "Siswa - Sistem Pendaftaran Kursus / Les Privat", 1000, 660);
+        tampil("siswa-dashboard.fxml", "Siswa - Sistem Pendaftaran Kursus / Les Privat");
     }
 
     public static void ganti(BorderPane induk, String namaFxml) {

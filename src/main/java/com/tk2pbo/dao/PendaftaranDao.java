@@ -106,7 +106,7 @@ public class PendaftaranDao implements CrudDao<Pendaftaran> {
     }
 
     public List<Pendaftaran> bySiswa(int idSiswa) throws SQLException {
-        return ambil("WHERE p.id_siswa = ? ORDER BY p.tanggal_pendaftaran DESC, p.id_pendaftaran DESC",
+        return ambil("WHERE p.id_siswa = ? ORDER BY p.tanggal_daftar DESC, p.id_pendaftaran DESC",
                 ps -> ps.setInt(1, idSiswa));
     }
 
