@@ -1,1 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<StackPane style="-fx-background-color: #e9eef5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="520.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 15, 0, 0, 5);">
+         <left>
+            <AnchorPane prefHeight="400.0" prefWidth="228.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="407.0" fitWidth="266.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/kiri.jpeg" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </left>
+         <right>
+            <AnchorPane prefHeight="400.0" prefWidth="332.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="417.0" fitWidth="261.0" layoutX="72.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/kanan.jpeg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="26.0" fitWidth="23.0" layoutX="97.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/profile.png" />
+                     </image>
+                  </ImageView>
+                  <PasswordField fx:id="enterpassword" layoutX="139.0" layoutY="187.0" prefHeight="25.0" prefWidth="178.0" promptText="Password" />
+                  <ImageView fitHeight="24.0" fitWidth="26.0" layoutX="97.0" layoutY="184.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/padlock.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="loginButton" layoutX="125.0" layoutY="280.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" style="-fx-background-color: #2563EB;" text="Login" textFill="WHITE" />
+                  <Button fx:id="daftarakunBotton" layoutX="125.0" layoutY="333.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="163.0" style="-fx-background-color: #2563EB;" text="Daftar Akun" textFill="WHITE" />
+                  <Label alignment="CENTER" layoutX="83.0" layoutY="232.0" prefHeight="17.0" prefWidth="237.0" text="Invalid Login. Plase Try Again " visible="false" />
+                  <Text layoutX="133.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selamat Datang " wrappingWidth="146.75421142578125">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="92.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Masuk ke Akun Sistem Untuk Melanjutkan  " />
+                  <TextField fx:id="username" layoutX="139.0" layoutY="131.0" prefHeight="23.0" prefWidth="176.0" promptText="Username" />
+               </children>
+            </AnchorPane>
+         </right>
+      </BorderPane>
+   </children>
+</StackPane>
