@@ -119,7 +119,6 @@
     -fx-background-color: transparent;
 }
 
-
 .tombol-utama,
 .tombol-bahaya,
 .tombol-netral {
@@ -317,12 +316,14 @@
     -fx-border-color: transparent transparent #eef1ef transparent;
 }
 
-.table-view .table-row-cell:odd {
-    -fx-background-color: #fafbfa;
-}
-
 .table-view .table-row-cell:hover {
     -fx-background-color: #f1f6f3;
+}
+
+.table-view .table-row-cell:empty,
+.table-view .table-row-cell:empty:hover {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
 }
 
 .table-view .table-row-cell:selected {
@@ -351,7 +352,57 @@
     -fx-font-size: 13px;
 }
 
-/* scrollbar tipis */
+.tab-pane {
+    -fx-tab-min-height: 38px;
+    -fx-tab-max-height: 38px;
+}
+
+.tab-pane > .tab-header-area {
+    -fx-padding: 0 0 10 0;
+}
+
+.tab-pane > .tab-header-area > .tab-header-background {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-border-color: transparent;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 20;
+    -fx-border-color: transparent;
+    -fx-padding: 0 18 0 18;
+    -fx-cursor: hand;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:hover {
+    -fx-background-color: -brand-soft;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:selected {
+    -fx-background-color: -brand;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab .tab-label {
+    -fx-text-fill: -text-muted;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:selected .tab-label {
+    -fx-text-fill: white;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab .focus-indicator {
+    -fx-border-color: transparent;
+}
+
+.tab-pane > .tab-content-area {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
 .scroll-bar {
     -fx-background-color: transparent;
 }
@@ -389,8 +440,6 @@
 .scroll-bar:horizontal .decrement-button {
     -fx-pref-width: 0;
 }
-
-/* ---------- Sidebar ---------- */
 
 .sidebar {
     -fx-background-color: linear-gradient(to bottom, #12372a, #0e2c21);
