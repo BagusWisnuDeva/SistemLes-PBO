@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.3
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Nov 19, 2026 at 08:17 AM
--- Server version: 8.4.3
--- PHP Version: 8.3.33
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 19 Nov 2026 pada 11.01
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,20 +24,20 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin`
+-- Struktur dari tabel `admin`
 --
 
 CREATE TABLE `admin` (
-  `id_admin` int NOT NULL,
-  `nama` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `no_telepon` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `username` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `id_admin` int(11) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `no_telepon` varchar(20) DEFAULT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `admin`
+-- Dumping data untuk tabel `admin`
 --
 
 INSERT INTO `admin` (`id_admin`, `nama`, `email`, `no_telepon`, `username`, `password`) VALUES
@@ -46,20 +46,20 @@ INSERT INTO `admin` (`id_admin`, `nama`, `email`, `no_telepon`, `username`, `pas
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jadwal`
+-- Struktur dari tabel `jadwal`
 --
 
 CREATE TABLE `jadwal` (
-  `id_jadwal` int NOT NULL,
-  `id_pendaftaran` int NOT NULL,
-  `hari` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_jadwal` int(11) NOT NULL,
+  `id_pendaftaran` int(11) NOT NULL,
+  `hari` varchar(20) NOT NULL,
   `jam_mulai` time NOT NULL,
   `jam_selesai` time NOT NULL,
-  `ruangan` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL
+  `ruangan` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `jadwal`
+-- Dumping data untuk tabel `jadwal`
 --
 
 INSERT INTO `jadwal` (`id_jadwal`, `id_pendaftaran`, `hari`, `jam_mulai`, `jam_selesai`, `ruangan`) VALUES
@@ -72,19 +72,19 @@ INSERT INTO `jadwal` (`id_jadwal`, `id_pendaftaran`, `hari`, `jam_mulai`, `jam_s
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kursus`
+-- Struktur dari tabel `kursus`
 --
 
 CREATE TABLE `kursus` (
-  `id_kursus` int NOT NULL,
-  `nama_kursus` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deskripsi` text COLLATE utf8mb4_unicode_ci,
-  `biaya_per_pertemuan` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `durasi_menit` int NOT NULL DEFAULT '60'
+  `id_kursus` int(11) NOT NULL,
+  `nama_kursus` varchar(100) NOT NULL,
+  `deskripsi` text DEFAULT NULL,
+  `biaya_per_pertemuan` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `durasi_menit` int(11) NOT NULL DEFAULT 60
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `kursus`
+-- Dumping data untuk tabel `kursus`
 --
 
 INSERT INTO `kursus` (`id_kursus`, `nama_kursus`, `deskripsi`, `biaya_per_pertemuan`, `durasi_menit`) VALUES
@@ -95,24 +95,24 @@ INSERT INTO `kursus` (`id_kursus`, `nama_kursus`, `deskripsi`, `biaya_per_pertem
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pendaftaran`
+-- Struktur dari tabel `pendaftaran`
 --
 
 CREATE TABLE `pendaftaran` (
-  `id_pendaftaran` int NOT NULL,
-  `id_siswa` int NOT NULL,
-  `id_kursus` int NOT NULL,
-  `id_pengajar` int NOT NULL,
+  `id_pendaftaran` int(11) NOT NULL,
+  `id_siswa` int(11) NOT NULL,
+  `id_kursus` int(11) NOT NULL,
+  `id_pengajar` int(11) NOT NULL,
   `tanggal_daftar` date NOT NULL,
-  `jumlah_pertemuan` int NOT NULL DEFAULT '1',
-  `total_biaya` decimal(12,2) NOT NULL DEFAULT '0.00',
-  `status_pembayaran` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT 'Belum Bayar',
-  `metode_pembayaran` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `jumlah_pertemuan` int(11) NOT NULL DEFAULT 1,
+  `total_biaya` decimal(12,2) NOT NULL DEFAULT 0.00,
+  `status_pembayaran` varchar(50) DEFAULT 'Belum Bayar',
+  `metode_pembayaran` varchar(50) DEFAULT NULL,
   `tanggal_bayar` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `pendaftaran`
+-- Dumping data untuk tabel `pendaftaran`
 --
 
 INSERT INTO `pendaftaran` (`id_pendaftaran`, `id_siswa`, `id_kursus`, `id_pengajar`, `tanggal_daftar`, `jumlah_pertemuan`, `total_biaya`, `status_pembayaran`, `metode_pembayaran`, `tanggal_bayar`) VALUES
@@ -128,82 +128,82 @@ INSERT INTO `pendaftaran` (`id_pendaftaran`, `id_siswa`, `id_kursus`, `id_pengaj
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pengajar`
+-- Struktur dari tabel `pengajar`
 --
 
 CREATE TABLE `pengajar` (
-  `id_pengajar` int NOT NULL,
-  `nama` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `no_telepon` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `spesialisasi` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `tarif_per_jam` decimal(12,2) DEFAULT '0.00',
-  `pengalaman` int DEFAULT '0'
+  `id_pengajar` int(11) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `no_telepon` varchar(20) DEFAULT NULL,
+  `spesialisasi` varchar(100) DEFAULT NULL,
+  `tarif_per_jam` decimal(12,2) DEFAULT 0.00,
+  `pengalaman` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `pengajar`
+-- Dumping data untuk tabel `pengajar`
 --
 
 INSERT INTO `pengajar` (`id_pengajar`, `nama`, `email`, `no_telepon`, `spesialisasi`, `tarif_per_jam`, `pengalaman`) VALUES
-(1, 'I Made Surya', 'surya@mail.local', '081255556666', 'Matematika', 75000.00, 5),
-(2, 'Ni Putu Dewi', 'dewi@mail.local', '081277778888', 'Bahasa Inggris', 80000.00, 3),
-(3, 'I Wayan Agus', 'agus@mail.local', '081299990000', 'Pemrograman Java', 100000.00, 8);
+(1, 'I Made Surya', 'surya@gmail.com', '081255556666', 'Matematika', 75000.00, 5),
+(2, 'Ni Putu Dewi', 'dewi@gmail.com', '081277778888', 'Bahasa Inggris', 80000.00, 3),
+(3, 'I Wayan Agus', 'agus@gmail.com', '081299990000', 'Pemrograman Java', 100000.00, 8);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `siswa`
+-- Struktur dari tabel `siswa`
 --
 
 CREATE TABLE `siswa` (
-  `id_siswa` int NOT NULL,
-  `nama` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `no_telepon` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `alamat` text COLLATE utf8mb4_unicode_ci,
+  `id_siswa` int(11) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `no_telepon` varchar(20) DEFAULT NULL,
+  `alamat` text DEFAULT NULL,
   `tanggal_lahir` date DEFAULT NULL,
-  `kelas` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `username` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `kelas` varchar(50) DEFAULT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `siswa`
+-- Dumping data untuk tabel `siswa`
 --
 
 INSERT INTO `siswa` (`id_siswa`, `nama`, `email`, `no_telepon`, `alamat`, `tanggal_lahir`, `kelas`, `username`, `password`) VALUES
-(3, 'Surya', 'surya@mail.local', '081200000001', 'Denpasar, Bali', '2005-01-01', 'Kelas A', 'surya_001', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9'),
-(4, 'Wisnu', 'wisnu@mail.local', '081200000002', 'Denpasar, Bali', '2005-01-01', 'Kelas A', 'wisnu_005', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9'),
-(5, 'Angga', 'angga@mail.local', '081200000003', 'Denpasar, Bali', '2005-01-01', 'Kelas B', 'angga_010', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9'),
-(6, 'Luthfi', 'luthfi@mail.local', '081200000004', 'Denpasar, Bali', '2005-01-01', 'Kelas B', 'luthfi_148', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9');
+(3, 'Surya', 'surya@gmail.com', '081200000001', 'Denpasar, Bali', '2005-01-01', 'Kelas A', 'surya_001', '9464fb01de62761d5691f5eb89e80aa1e40a84bea6ee5d2ab5ca90efd9776b47'),
+(4, 'Wisnu', 'wisnu@gmail.com', '081200000002', 'Denpasar, Bali', '2005-01-01', 'Kelas A', 'wisnu_005', '9464fb01de62761d5691f5eb89e80aa1e40a84bea6ee5d2ab5ca90efd9776b47'),
+(5, 'Angga', 'angga@gmail.com', '081200000003', 'Denpasar, Bali', '2005-01-01', 'Kelas B', 'angga_010', '9464fb01de62761d5691f5eb89e80aa1e40a84bea6ee5d2ab5ca90efd9776b47'),
+(6, 'Luthfi', 'luthfi@gmail.com', '081200000004', 'Denpasar, Bali', '2005-01-01', 'Kelas B', 'luthfi_148', '9464fb01de62761d5691f5eb89e80aa1e40a84bea6ee5d2ab5ca90efd9776b47');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `admin`
+-- Indeks untuk tabel `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id_admin`),
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- Indexes for table `jadwal`
+-- Indeks untuk tabel `jadwal`
 --
 ALTER TABLE `jadwal`
   ADD PRIMARY KEY (`id_jadwal`),
   ADD KEY `fk_jadwal_pendaftaran` (`id_pendaftaran`);
 
 --
--- Indexes for table `kursus`
+-- Indeks untuk tabel `kursus`
 --
 ALTER TABLE `kursus`
   ADD PRIMARY KEY (`id_kursus`);
 
 --
--- Indexes for table `pendaftaran`
+-- Indeks untuk tabel `pendaftaran`
 --
 ALTER TABLE `pendaftaran`
   ADD PRIMARY KEY (`id_pendaftaran`),
@@ -212,70 +212,70 @@ ALTER TABLE `pendaftaran`
   ADD KEY `fk_daftar_pengajar` (`id_pengajar`);
 
 --
--- Indexes for table `pengajar`
+-- Indeks untuk tabel `pengajar`
 --
 ALTER TABLE `pengajar`
   ADD PRIMARY KEY (`id_pengajar`);
 
 --
--- Indexes for table `siswa`
+-- Indeks untuk tabel `siswa`
 --
 ALTER TABLE `siswa`
   ADD PRIMARY KEY (`id_siswa`),
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `admin`
+-- AUTO_INCREMENT untuk tabel `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id_admin` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `jadwal`
+-- AUTO_INCREMENT untuk tabel `jadwal`
 --
 ALTER TABLE `jadwal`
-  MODIFY `id_jadwal` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_jadwal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `kursus`
+-- AUTO_INCREMENT untuk tabel `kursus`
 --
 ALTER TABLE `kursus`
-  MODIFY `id_kursus` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_kursus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `pendaftaran`
+-- AUTO_INCREMENT untuk tabel `pendaftaran`
 --
 ALTER TABLE `pendaftaran`
-  MODIFY `id_pendaftaran` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_pendaftaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `pengajar`
+-- AUTO_INCREMENT untuk tabel `pengajar`
 --
 ALTER TABLE `pengajar`
-  MODIFY `id_pengajar` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pengajar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `siswa`
+-- AUTO_INCREMENT untuk tabel `siswa`
 --
 ALTER TABLE `siswa`
-  MODIFY `id_siswa` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `jadwal`
+-- Ketidakleluasaan untuk tabel `jadwal`
 --
 ALTER TABLE `jadwal`
   ADD CONSTRAINT `fk_jadwal_pendaftaran` FOREIGN KEY (`id_pendaftaran`) REFERENCES `pendaftaran` (`id_pendaftaran`) ON DELETE CASCADE;
 
 --
--- Constraints for table `pendaftaran`
+-- Ketidakleluasaan untuk tabel `pendaftaran`
 --
 ALTER TABLE `pendaftaran`
   ADD CONSTRAINT `fk_daftar_kursus` FOREIGN KEY (`id_kursus`) REFERENCES `kursus` (`id_kursus`) ON DELETE CASCADE,
