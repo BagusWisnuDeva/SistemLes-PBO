@@ -81,4 +81,9 @@ public class Siswa extends Pengguna {
     public String getPeran() {
         return "Siswa";
     }
+
+    @Override
+    public String toString() {
+    return kelas == null || kelas.isBlank() ? nama : nama + " (" + kelas + ")";
+}
 }
