@@ -25,10 +25,10 @@ public abstract class Pengguna {
     }
 
     public void setId(int id) {
-        if (id <= 0) {
-            throw new IllegalArgumentException("ID harus lebih besar dari 0.");
-        }
-        this.id = id;
+    if (id < 0) {
+        throw new IllegalArgumentException("ID tidak boleh negatif.");
+    }
+    this.id = id;
     }
 
     public String getNama() {
