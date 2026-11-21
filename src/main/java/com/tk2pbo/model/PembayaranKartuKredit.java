@@ -2,7 +2,7 @@ package com.tk2pbo.model;
 
 public class PembayaranKartuKredit extends MetodePembayaran{
 
-    public static final double Persen = 0.25;
+    public static final double Persen = 0.025;
     public PembayaranKartuKredit() {
         super("Kartu Kredit");
     }
